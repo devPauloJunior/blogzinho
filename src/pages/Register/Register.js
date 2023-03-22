@@ -27,7 +27,7 @@ const Register = () => {
   }
 
   return (
-    <div className='styles.register'>
+    <div className={ `${styles.register} container` }>
         <h1>Cadastre-se para postar seu conteúdo</h1>
         <p>Crie seu usuário e compartilhe suas histórias.</p>
         <form onSubmit={ handleSubmit }>
@@ -59,8 +59,8 @@ const Register = () => {
             onChange={ (e) => setConfirmPassword(e.target.value) }
             />
           </label>
-          <button className='btn'>Cadastrar</button>
-          { error && <p className='error'>{ error }</p> }
+          <button className='btn btn-success my-4'>Cadastrar</button>
+          { error && <p className={ `${styles.error} text-danger` }>{ error }</p> }
         </form>
 
     </div>

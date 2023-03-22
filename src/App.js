@@ -1,5 +1,6 @@
 // MEUS CSS
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // MEUS IMPORTS
 import { BrowserRouter, Routes, Route, Navigate, Router } from 'react-router-dom';
@@ -13,7 +14,7 @@ import Login from './pages/Login/Login'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <NavBar />
         <div className='container'>
