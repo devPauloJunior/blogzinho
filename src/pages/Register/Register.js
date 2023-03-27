@@ -3,6 +3,7 @@ import styles from './Register.module.css'
 
 // MEUS IMPORTS
 import { useState, useEffect } from 'react'
+import { useAuthentication } from '../../hooks/userAuthentication'
 
 const Register = () => {
   const [displayName, setDisplayName] = useState("")
@@ -11,7 +12,9 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState ("")
   const [error, setError] = useState ("")
 
-  const handleSubmit = (e) => { 
+  const { createUser, error: authError, loading } = useAuthentication()
+
+  const handleSubmit = async (e) => { 
     e.preventDefault()
     setError("")
 
@@ -20,11 +23,16 @@ const Register = () => {
     if (password !== confirmPassword) {
       setError("As senhas precisam ser identicas!")
       return
-    }
+      }
 
-    console.log(user)
-
+    const res = await createUser(user)
   }
+
+  useEffect(() => {
+    if (authError) {
+      setError(authError)
+    }
+  }, [authError])
 
   return (
     <div className={ `${styles.register} container` }>
@@ -59,7 +67,8 @@ const Register = () => {
             onChange={ (e) => setConfirmPassword(e.target.value) }
             />
           </label>
-          <button className='btn btn-success my-4'>Cadastrar</button>
+          { !loading &&  <button className='btn btn-success my-4'>Cadastrar</button>}
+          { loading && <button className='btn btn-success my-4' disabled >Aguarde...</button> }
           { error && <p className={ `${styles.error} text-danger` }>{ error }</p> }
         </form>
 
