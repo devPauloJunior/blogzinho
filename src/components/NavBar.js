@@ -1,15 +1,16 @@
 // MEU CSS
-import styles from './NavBar.module.css';
+import styles from "./NavBar.module.css";
 
 // MEUS IMPORTS
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
-import { useAuthentication } from "../hooks/userAuthentication"
+import { useAuthentication } from "../hooks/useAuthentication";
 
-import { useAuthValue } from "../context/AuthContext"
+import { useAuthValue } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { user } = useAuthValue()
+  const { user } = useAuthValue();
+  console.log(user.email)
 
   return (
     <nav className={ `${styles.navbar} d-flex justify-content-between align-items-center p-4 ` }>
@@ -37,6 +38,27 @@ const NavBar = () => {
                       "")}
                   >
                     Cadastrar
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {user && (
+              <>
+                <li>
+                  <NavLink
+                    to="/post/create"
+                    className={({ isActive }) => (isActive ? styles.active : "")}
+                  >
+                    Novo Post
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) => (isActive ? styles.active : 
+                      "")}
+                  >
+                    Dashboard
                   </NavLink>
                 </li>
               </>
