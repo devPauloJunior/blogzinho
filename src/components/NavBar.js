@@ -10,7 +10,7 @@ import { useAuthValue } from "../context/AuthContext";
 
 const NavBar = () => {
   const { user } = useAuthValue();
-  console.log(user.email)
+  const { logout } = useAuthentication();
 
   return (
     <nav className={ `${styles.navbar} d-flex justify-content-between align-items-center p-4 ` }>
@@ -64,6 +64,9 @@ const NavBar = () => {
               </>
             )}
             <li> <NavLink to="/about" className={ ({ isActive }) => ( isActive ? styles.active : "") }>Sobre</NavLink> </li>
+            {user && (
+          <li onClick={logout}>Sair</li>
+            )}
         </ul>
     </nav>
   )
