@@ -9,7 +9,7 @@ const Login = () => {
   const [ password, setPassword ] = useState("");
   const [ error, setError ] = useState("");
 
-  const { login, error: authError, loading } = useAuthentication;
+  const { login, error: authError, loading } = useAuthentication();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +26,14 @@ const Login = () => {
     console.log(res);
   };
 
+  useEffect(() => {
+    if (authError) {
+      setError(authError);
+    }
+  });
+
   return (
-    <section>
+    <section className={`${styles.login} container`}>
       <h1>Entrar</h1>
       <p>Faça o login para utilizar o sistema</p>
       <hr />
