@@ -5,6 +5,7 @@ import styles from "./CreatePost.module.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthValue } from "../../context/AuthContext"
+import { useInsertDocument } from "../../hooks/useInsertDocument"
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -12,9 +13,29 @@ const CreatePost = () => {
   const [body, setBody] = useState("");
   const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
+
+  const { user } = useAuthValue();
+
+  const { insertDocument, response } = useInsertDocument("posts")
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFormError("")
+
+    //validar URL
+
+    //criar a lista de TAGS
+
+    //checar todos os valores
+    insertDocument({
+      title,
+      image,
+      body,
+      tags,
+      uid: user.uid,
+      createBy: user.displayName,
+    })
+
   };
 
   return (
@@ -66,12 +87,9 @@ const CreatePost = () => {
               value={tags}  
             />
           </label>
-
-          <button className='btn btn-success my-4'>Criar Post</button>
-
-          {/* {!loading && <button className='btn btn-success my-4'>Criar Post</button>}
-          {loading && <button className='btn btn-success my-4' disabled >Aguarde...</button> }
-          { error && <p className={ `${styles.error} text-danger` }>{ error }</p> } */}
+          {!response.loading && <button className='btn btn-success my-4'>Criar Post</button>}
+          {response.loading && <button className='btn btn-success my-4' disabled >Aguarde...</button> }
+          { response.error && <p className={ `${styles.error} text-danger` }>{ response.error }</p> }
         </form>
     </section>
   )
